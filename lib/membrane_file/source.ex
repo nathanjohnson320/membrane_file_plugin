@@ -46,8 +46,7 @@ defmodule Membrane.File.Source do
     with <<payload::binary>> <- fd |> mockable(CommonFile).binread(size) do
       {{:ok, [buffer: {:output, %Buffer{payload: payload}}] ++ redemand}, state}
     else
-      :eof -> {{:ok, end_of_stream: :output}, state}
-      {:error, reason} -> {{:error, {:read_file, reason}}, state}
+      _ -> {{:ok, end_of_stream: :output}, state}
     end
   end
 
